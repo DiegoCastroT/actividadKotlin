@@ -8,17 +8,11 @@ package ejercicio1
 fun main(){
 
     for(i in 1..100){
-        //Check if numbers are divisible by 3 and 5
-        if(i % 3 == 0 && i % 5 == 0) {
-            println("triqui")
-        //Check if numbers are divisible by 3
-        }else if(i % 3 == 0){
-            println("tri")
-        //Check if numbers are divisible by 5
-        }else if(i % 5 == 0){
-            println("qui")
-        }else{
-            println(i)
+        when {
+            i % 3 == 0 && i % 5 == 0 -> println("triqui")
+            i % 3 == 0 -> println("tri")
+            i % 5 == 0 -> println("qui")
+            else -> println(i)
         }
     }
 }
