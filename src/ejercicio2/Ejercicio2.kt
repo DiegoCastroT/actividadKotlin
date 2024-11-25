@@ -8,10 +8,14 @@ package ejercicio2
 fun main(){
 
     println("Introduce la primera palabra")
+
     val gettedWord1 = readln()
+    //Convert the word to a char array
     val word1 = gettedWord1.toCharArray()
+
     println("Introduce la segunda palabra")
     val palabra2 = readln()
+    //Convert the word to a char array
     val gettedWord2 = palabra2.toCharArray()
 
 
@@ -20,6 +24,7 @@ fun main(){
 
 }
 
+//Function that checks if two words are anagrams
 private fun checkAnagrama(
     array1: CharArray,
     array2: CharArray,
