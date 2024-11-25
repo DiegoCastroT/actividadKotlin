@@ -25,7 +25,7 @@ private fun checkAnagrama(
     array2: CharArray,
 ): Boolean {
 
-    return if (array1.size == array2.size) {
+    return if (array1.size == array2.size && !array1.contentEquals(array2)) {
         //Sort the arrays and compare them to see if they are the same
         array1.sort()
         array2.sort()
