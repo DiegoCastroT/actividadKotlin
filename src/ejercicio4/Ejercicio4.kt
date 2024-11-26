@@ -1,33 +1,55 @@
 package ejercicio4
 
 fun main() {
-
-    val atleta = arrayListOf("Correr", "Saltar", "Correr", "Saltar", "Correr")
+    val atleta = arrayOf("correr", "correr", "correr", "saltar", "correr")
     val pista = "_|_|_"
 
-    println("$pista ${checkRace(atleta, pista)}")
+    val resultado = evaluarCarrera(atleta, pista)
+    println("Carrera superada: ${resultado.first}")
+    println("Pista modificada: ${resultado.second}")
 }
 
-fun checkRace(atleta: ArrayList<String>, pista: String): Boolean {
+fun evaluarCarrera(atleta: Array<String>, pista: String): Pair<Boolean, String> {
 
-    if (atleta.size != pista.length) return false
+    var pistaArray = pista.toCharArray()
+    var success = true
 
     for (i in atleta.indices) {
-        if (atleta[i].equals("Correr")) {
-            if (pista[i] == '_') {
-                continue
-            } else {
-                return false
-            }
-        } else if (atleta[i].equals("Saltar")) {
-            if (pista[i] == '|') {
-                continue
-            } else {
-                return false
-            }
+        if (i >= pistaArray.size) {
+            pistaArray += '?'
+            success = false
         } else {
-            return false
+            when {
+                atleta[i] == "correr" && pistaArray[i] == '_' -> pistaArray[i] = '_'
+                atleta[i] == "saltar" && pistaArray[i] == '|' -> pistaArray[i] = '|'
+
+                // If atleta is jumping in floor segment
+                atleta[i] == "saltar" && pistaArray[i] == '_' -> {
+                    pistaArray[i] = 'x'
+                    success = false
+                }
+                // If atleta is running and there is a wall
+                atleta[i] == "correr" && pistaArray[i] == '|' -> {
+                    pistaArray[i] = '/'
+                    success = false
+                }
+                else -> {
+                    pistaArray[i] = '?'
+                    success = false
+                }
+            }
         }
     }
-    return true
+
+    // If atleta is smaller than pista, fill with '?'
+    if (atleta.size < pistaArray.size) {
+        //Gets the remaining elements of the pista array by getting the difference between the sizes
+        for (i in atleta.size..<pistaArray.size) {
+            pistaArray[i] = '?'
+            success = false
+        }
+    }
+
+    val pistaModificada = pistaArray.concatToString()
+    return Pair(success, pistaModificada)
 }
