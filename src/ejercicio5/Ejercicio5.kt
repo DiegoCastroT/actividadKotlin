@@ -2,6 +2,7 @@ package ejercicio5
 
 fun main() {
 
+    //Winner options of the game
     val winnerOptions = listOf(
         listOf(0, 1, 2),
         listOf(3, 4, 5),
@@ -14,9 +15,9 @@ fun main() {
     )
 
     val matriz = Array(3) { Array(3) { "" } }
-    matriz[0] = arrayOf("X", "X", "X")
-    matriz[1] = arrayOf("O", "O", "O")
-    matriz[2] = arrayOf("X", "O", "X")
+    matriz[0] = arrayOf("", "O", "X")
+    matriz[1] = arrayOf("O", "", "X")
+    matriz[2] = arrayOf("", "", "X")
 
     println(check(matriz, winnerOptions))
 }
@@ -58,11 +59,17 @@ fun findWinner(flatMatriz: List<String>, winnerOptions: List<List<Int>>): String
     var xWins = false
     var oWins = false
 
+    //Loop through the winner options to check if there is a winner
     for (option in winnerOptions) {
         val a = option[0]
         val b = option[1]
         val c = option[2]
 
+        /*
+        Check if the three elements in the winner option are not empty and are the same
+        If they are the same, check if they are X or O to determine the winner
+        It's only neccesary to check with a because the three elements will be same
+         */
         if (flatMatriz[a].isNotEmpty() && flatMatriz[a] == flatMatriz[b] && flatMatriz[a] == flatMatriz[c]) {
             if (flatMatriz[a] == "X") {
                 xWins = true
