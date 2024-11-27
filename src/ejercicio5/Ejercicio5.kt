@@ -14,9 +14,9 @@ fun main() {
     )
 
     val matriz = Array(3) { Array(3) { "" } }
-    matriz[0] = arrayOf("X", "O", "X")
-    matriz[1] = arrayOf("X", "X", "O")
-    matriz[2] = arrayOf("X", "X", "X")
+    matriz[0] = arrayOf("X", "X", "X")
+    matriz[1] = arrayOf("O", "O", "O")
+    matriz[2] = arrayOf("X", "O", "X")
 
     println(check(matriz, winnerOptions))
 }
@@ -45,27 +45,37 @@ fun check(matriz: Array<Array<String>>, winnerOptions: List<List<Int>>): String 
 
     val winner = findWinner(unifiedMatriz, winnerOptions)
 
-    return if (winner != null) {
-        winner
-    } else {
-        "Empate"
+
+    return when (winner) {
+        null -> "Null"
+        "X" -> "X"
+        "O" -> "O"
+        else -> "Empate"
     }
 }
 
 fun findWinner(flatMatriz: List<String>, winnerOptions: List<List<Int>>): String? {
+    var xWins = false
+    var oWins = false
 
-    //Loop through all the possible winning combinations to find a winner combination
     for (option in winnerOptions) {
         val a = option[0]
         val b = option[1]
         val c = option[2]
-        /*
-        If the three elements in the winning combination are not empty and are the same, then we have a winner
-        It's only neccesary to check a because the other two elements will be the same
-         */
+
         if (flatMatriz[a].isNotEmpty() && flatMatriz[a] == flatMatriz[b] && flatMatriz[a] == flatMatriz[c]) {
-            return flatMatriz[a]
+            if (flatMatriz[a] == "X") {
+                xWins = true
+            } else if (flatMatriz[a] == "O") {
+                oWins = true
+            }
         }
     }
-    return null
+
+    return when {
+        xWins && oWins -> null
+        xWins -> "X"
+        oWins -> "O"
+        else -> "Empate"
+    }
 }
