@@ -1,12 +1,12 @@
 package ejercicio4
 
 fun main() {
-    val atleta = arrayOf("correr", "correr", "correr", "saltar", "correr")
+    val atleta = arrayOf("correr", "correr", "saltar", "saltar", "correr")
     val pista = "_|_|_"
 
     val resultado = evaluarCarrera(atleta, pista)
-    println("Carrera superada: ${resultado.first}")
-    println("Pista modificada: ${resultado.second}")
+    print(resultado.second)
+    print(" ${resultado.first}")
 }
 
 fun evaluarCarrera(atleta: Array<String>, pista: String): Pair<Boolean, String> {
@@ -19,22 +19,21 @@ fun evaluarCarrera(atleta: Array<String>, pista: String): Pair<Boolean, String> 
             pistaArray += '?'
             success = false
         } else {
-            when {
-                atleta[i] == "correr" && pistaArray[i] == '_' -> pistaArray[i] = '_'
-                atleta[i] == "saltar" && pistaArray[i] == '|' -> pistaArray[i] = '|'
-
-                // If atleta is jumping in floor segment
-                atleta[i] == "saltar" && pistaArray[i] == '_' -> {
-                    pistaArray[i] = 'x'
-                    success = false
+            when (atleta[i]) {
+                "correr" -> {
+                    if (pistaArray[i] == '|') {
+                        pistaArray[i] = '/' // If the atleta is running in a wall, the track is marked with '/'
+                        success = false
+                    }
                 }
-                // If atleta is running and there is a wall
-                atleta[i] == "correr" && pistaArray[i] == '|' -> {
-                    pistaArray[i] = '/'
-                    success = false
+                "saltar" -> {
+                    if (pistaArray[i] == '_') {
+                        pistaArray[i] = 'x' // If the atleta is jumping instead of running, the track is marked with 'x'
+                        success = false
+                    }
                 }
                 else -> {
-                    pistaArray[i] = '?'
+                    pistaArray[i] = '?' // If the atleta is not running or jumping, the track is marked with '?'
                     success = false
                 }
             }
@@ -44,7 +43,7 @@ fun evaluarCarrera(atleta: Array<String>, pista: String): Pair<Boolean, String> 
     // If atleta is smaller than pista, fill with '?'
     if (atleta.size < pistaArray.size) {
         //Gets the remaining elements of the pista array by getting the difference between the sizes
-        for (i in atleta.size..<pistaArray.size) {
+        for (i in atleta.size until pistaArray.size) {
             pistaArray[i] = '?'
             success = false
         }
