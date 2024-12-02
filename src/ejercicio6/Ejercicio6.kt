@@ -8,6 +8,7 @@ fun main() {
     val agenda = Agenda(ArrayList<Contacto>(), 3)
 
     fun showMenu() {
+        println("-------------------------")
         println("1. Añadir un contacto a la agenda")
         println("2. Listar todos los contactos de la agenda.")
         println("3. Buscar un contacto por su nombre.")
@@ -53,14 +54,24 @@ fun main() {
     fun deleteContact() {
         println("Dime el nombre del contacto")
         val name = readln()
-        agenda.deleteContact(name)
+        if(agenda.deleteContact(name)){
+            println("Se ha eliminado correctamente")
+        }else{
+            println("No se ha podido eliminar")
+        }
     }
 
 
     fun getStorage() {
+        println("Hay ${agenda.getCurrentSize()} libre/s")
     }
 
     fun checkFull() {
+        if(agenda.isFull()){
+            println("La agenda esta llena")
+        }else{
+            println("Aun hay huecos")
+        }
     }
 
     while (!success) {

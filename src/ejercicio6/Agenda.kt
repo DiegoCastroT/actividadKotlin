@@ -28,7 +28,7 @@ class Agenda(private var contacts: ArrayList<Contacto>, private var maxSize: Int
     fun getContact(name: String): String {
         for (contact in contacts) {
             if (contact.nombre == name) {
-                return contact.telefono
+                return ("su telefono es: ${contact.telefono}")
             }
         }
         return "No encontrado"
@@ -44,9 +44,9 @@ class Agenda(private var contacts: ArrayList<Contacto>, private var maxSize: Int
         return false
     }
 
-    fun deleteContact(name:String):Boolean{
-        for(contacto in contacts){
-            if(contacto.nombre == name){
+    fun deleteContact(name: String): Boolean {
+        for (contacto in contacts) {
+            if (contacto.nombre == name) {
                 contacts.remove(contacto)
                 return true
             }
@@ -54,11 +54,11 @@ class Agenda(private var contacts: ArrayList<Contacto>, private var maxSize: Int
         return false
     }
 
-    fun getCurrentSize():Int{
-        return contacts.size - maxSize
+    fun getCurrentSize(): Int {
+        return maxSize - contacts.size
     }
 
-    fun isFull():Boolean{
+    fun isFull(): Boolean {
         return contacts.size == maxSize
     }
 }
