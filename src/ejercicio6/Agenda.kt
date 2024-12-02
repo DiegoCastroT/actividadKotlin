@@ -1,15 +1,17 @@
 package ejercicio6
 
-//Nombre unique
 class Agenda(private var contacts: ArrayList<Contacto>, private var maxSize: Int = 3) {
 
+    //Adds a contact into contacts arrayList
     fun addContact(name: String, tel: String): Boolean {
 
         if (contacts.size >= maxSize) {
+            println("La agenda esta llena")
             return false
         } else {
             for (contact in contacts) {
-                if (contact.nombre == name) {
+                if (checkName(name)) {
+                    println("Ya existe ese nombre")
                     return false
                 }
             }
@@ -19,47 +21,53 @@ class Agenda(private var contacts: ArrayList<Contacto>, private var maxSize: Int
         }
     }
 
+    //List all contacts
     fun listContacts() {
-        for (contact in contacts) {
-            println("Nombre: ${contact.nombre} Teléfono: ${contact.telefono}")
+        if (contacts.size == 0) {
+            println("No hay contactos")
+        } else {
+            for (contact in contacts) {
+                println("Nombre: ${contact.nombre} Teléfono: ${contact.telefono}")
+            }
         }
     }
 
+    //Returns the contact
     fun getContact(name: String): String {
-        for (contact in contacts) {
-            if (contact.nombre == name) {
-                return ("su telefono es: ${contact.telefono}")
-            }
+        if (checkName(name)) {
+            val contact = contacts.find { it.nombre.uppercase() == name.uppercase() }
+            return "Nombre: ${contact?.nombre} Teléfono: ${contact?.telefono}"
+        } else {
+            return "No encontrado"
         }
-        return "No encontrado"
     }
 
+    //Verify if the name exists
     fun isContact(name: String): Boolean {
-
-        for (contact in contacts) {
-            if (contact.nombre == name) {
-                return true
-            }
-        }
-        return false
+        return checkName(name)
     }
 
+    //Delete the contact if it exists
     fun deleteContact(name: String): Boolean {
-        for (contacto in contacts) {
-            if (contacto.nombre == name) {
-                contacts.remove(contacto)
-                return true
-            }
+        if (checkName(name)) {
+            contacts.removeIf { it.nombre.uppercase() == name.uppercase() }
+            return true
         }
         return false
     }
 
+    //Returns the current size of the contacts
     fun getCurrentSize(): Int {
         return maxSize - contacts.size
     }
 
+    //Returns if the agenda is full
     fun isFull(): Boolean {
         return contacts.size == maxSize
+    }
+
+    private fun checkName(name: String): Boolean {
+        return contacts.find { it.nombre.uppercase() == name.uppercase() } != null
     }
 }
 
